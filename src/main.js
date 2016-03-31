@@ -4,7 +4,7 @@ import App from './App'
 import indexPage from './pages/indexPage'
 import detailPage from './pages/detailPage'
 import userPage from './pages/userPage'
-
+import loginPage from './pages/loginPage'
 // Vue.config.debug = true
 Vue.use(VueRouter)
 
@@ -20,6 +20,10 @@ router.map({
   '/user/:loginname': {
     name: 'user',
     component: userPage
+  },
+  'login': {
+    name: 'login',
+    component: loginPage
   }
 })
 

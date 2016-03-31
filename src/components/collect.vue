@@ -16,12 +16,12 @@
       collect () {
         if (this.collected === false) {
           request
-            .post('https://cnodejs.org/api/topic_collect/collect')
-            .set('Content-Type', 'application/json')
-            .send({accessToken: '166cc9bc-ddcc-42f2-87ba-8d276f6bb333', topic_id: this.id})
+            .post('https://cnodejs.org/api/v1/topic_collect/collect')
+            .send('accesstoken=166cc9bc-ddcc-42f2-87ba-8d276f6bb333')
+            .send(`topic_id=${this.id}`)
             .end((err, res) => {
               if (!err) {
-                console.log(res)
+                console.log(res.body)
               }
             })
         } else {

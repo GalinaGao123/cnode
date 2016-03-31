@@ -1,6 +1,7 @@
 <template lang="jade">
 .user-page
   h1 {{user.loginname}}
+  h2 this is my collections
   my-collection(:collections="collections")
 </template>
 <script>

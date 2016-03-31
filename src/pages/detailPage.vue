@@ -29,7 +29,7 @@ export default {
     data (transition) {
       request
         .get('https://cnodejs.org/api/v1/topic/' + transition.to.params.id)
-        .query({mdrender: false})
+        .query({mdrender: false, accesstoken: `${window.localStorage.getItem('accesstoken')}`})
         .end((err, res) => {
           if (!err) {
             transition.next({topic: res.body.data})

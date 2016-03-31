@@ -5,7 +5,8 @@
       .author
         a(v-link="{ name: 'user', params: {loginname: topic.author.loginname} }")
           img(:src="topic.author.avatar_url")
-      a(v-link="{ name: 'topic', params: {id: topic.id} }") {{topic.title}}
+      .topic
+        a(v-link="{ name: 'topic', params: {id: topic.id} }") {{topic.title}}
   button(@click="loadMore") Load More
 </template>
 
@@ -44,3 +45,26 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.topics
+  margin-bottom 50px
+  ul
+    list-style none
+    padding-left 0
+    li
+      padding 20px 0
+      border-bottom 1px solid #808080
+      &:after
+        content ''
+        display block
+        clear both
+      .author
+        float left
+        width 80px
+        img
+          width 100%
+      .topic
+        float left
+        margin-left 20px
+</style>
