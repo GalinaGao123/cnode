@@ -1,25 +1,36 @@
 <template lang="jade">
 .topics
-  ul
+  ul.tags
+    li(v-for="tag in tags")
+      a(@click="changeTab($index)", :class="{'current-tag': $index == currentTag}") {{tag.name}}
+  ul.topic-container
     li(v-for="topic in topics")
-      .author
-        a(v-link="{ name: 'user', params: {loginname: topic.author.loginname} }")
-          img(:src="topic.author.avatar_url")
-      .topic
-        a(v-link="{ name: 'topic', params: {id: topic.id} }") {{topic.title}}
+      topic(:topic="topic")
   button(@click="loadMore") Load More
 </template>
 
 <script>
 import request from 'superagent'
+import topic from './topic'
 
 export default {
   data () {
     return {
       topics: [],
       page: 1,
-      limit: 10
+      limit: 10,
+      tags: [
+        {name: '全部', api: ''},
+        {name: '精华', api: 'good'},
+        {name: '分享', api: 'share'},
+        {name: '问答', api: 'ask'},
+        {name: '招聘', api: 'job'}
+      ],
+      currentTag: 0
     }
+  },
+  components: {
+    topic
   },
   ready () {
     this.loadTopics()
@@ -31,7 +42,8 @@ export default {
         .query({
           page: this.page,
           limit: this.limit,
-          mdrender: false
+          mdrender: false,
+          tab: this.tags[this.currentTag].api
         }).end((err, res) => {
           if (!err) {
             res.body.data.forEach(cur => this.topics.push(cur))
@@ -41,6 +53,22 @@ export default {
     loadMore () {
       this.page += 1
       this.loadTopics()
+    },
+    changeTab (idx) {
+      this.currentTag = idx
+      this.page = 1
+      request
+        .get('https://cnodejs.org/api/v1/topics')
+        .query({
+          page: this.page,
+          limit: this.limit,
+          mdrender: false,
+          tab: this.tags[this.currentTag].api
+        }).end((err, res) => {
+          if (!err) {
+            this.topics = res.body.data
+          }
+        })
     }
   }
 }
@@ -48,23 +76,29 @@ export default {
 
 <style lang="stylus">
 .topics
-  margin-bottom 50px
+  background #fff
   ul
     list-style none
     padding-left 0
+    border-radius 5px 5px 0 0
+    &.tags
+      background #f6f6f6
+      padding 10px 20px
+      li
+        display inline-block
+        margin-right 20px
+        .current-tag
+          background #80bd01
+          color #fff
+          padding 2px 4px
+  button
+    margin 20px 0
+  ul.topic-container
     li
-      padding 20px 0
-      border-bottom 1px solid #808080
+      padding 10px 0
+      border-bottom 1px solid #eee
       &:after
         content ''
         display block
         clear both
-      .author
-        float left
-        width 80px
-        img
-          width 100%
-      .topic
-        float left
-        margin-left 20px
 </style>

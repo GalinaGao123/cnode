@@ -21,7 +21,7 @@ router.map({
     name: 'user',
     component: userPage
   },
-  'login': {
+  '/login': {
     name: 'login',
     component: loginPage
   }

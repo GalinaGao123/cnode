@@ -1,0 +1,63 @@
+<template lang="jade">
+.topic
+  .author
+    a(v-link="{ name: 'user', params: {loginname: topic.author.loginname} }")
+      img(:src="topic.author.avatar_url")
+  p {{topic.reply_count}} / {{topic.visit_count}}
+  .tag(:class="{grey: !topic.top && !topic.good}") {{tag}}
+  .topic-title
+    a(v-link="{ name: 'topic', params: {id: topic.id} }") {{topic.title}}
+
+</template>
+
+<script>
+export default {
+  props: ['topic'],
+  computed: {
+    tag () {
+      if (this.topic.top) {
+        return '置顶'
+      } else if (this.topic.good) {
+        return '精华'
+      } else {
+        return this.topic.tab
+      }
+    }
+  }
+}
+</script>
+
+<style lang="stylus">
+.topic
+  display flex
+  padding 0 20px
+  align-items center
+  .author
+    a
+      display block
+      &:hover
+        text-decoration none
+      img
+        width 40px
+        display block
+  p
+    margin 0 10px
+    width 70px
+  .tag
+    width 36px
+    text-align center
+    background #80bd01
+    color #fff
+    &.grey
+      background #ccc
+  .topic-title
+    margin-left 10px
+    width 70%
+    a
+      display block
+      overflow hidden
+      text-overflow ellipsis
+      white-space nowrap
+      width 100%
+
+</style>

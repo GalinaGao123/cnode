@@ -1,12 +1,16 @@
 <template lang="jade">
 .user-page
-  h1 {{user.loginname}}
-  h2 this is my collections
-  my-collection(:collections="collections")
+  .page-content
+    h1 {{user.loginname}}
+    h2 this is my collections
+    my-collection(:collections="collections")
+  user(:user-info="user")
 </template>
+
 <script>
 import request from 'superagent'
 import myCollection from '../components/myCollection'
+import user from '../components/user'
 
 export default {
   data () {
@@ -16,7 +20,8 @@ export default {
     }
   },
   components: {
-    myCollection
+    myCollection,
+    user
   },
   route: {
     data (transition) {
@@ -39,3 +44,18 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.user-page
+  &:after
+    content ''
+    display block
+    clear both
+  .page-content
+    width 70%
+    float left
+    padding-right 30px
+  .user-aside
+    width 30%
+    float left
+</style>

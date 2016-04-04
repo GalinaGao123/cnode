@@ -1,71 +1,51 @@
 <template lang="jade">
 .home-page
-  .topics
-    ul
-      li(v-for="topic in topics")
-        .author
-          a(v-link="{ name: 'user', params: {loginname: topic.author.loginname} }")
-            img(:src="topic.author.avatar_url")
-        .topic
-          a(v-link="{ name: 'topic', params: {id: topic.id} }") {{topic.title}}
-    button(@click="loadMore") Load More
+  .page-content
+    topics
+  user(:user-info="userDetail", v-if="user.accessToken")
 </template>
 
 <script>
+import topics from '../components/topics'
+import user from '../components/user'
+import {getUserInfo} from '../vuex/getters'
 import request from 'superagent'
 
 export default {
   data () {
     return {
-      topics: [],
-      page: 1,
-      limit: 10
+      userDetail: {}
+    }
+  },
+  components: {
+    topics,
+    user
+  },
+  vuex: {
+    getters: {
+      user: getUserInfo
     }
   },
   ready () {
-    this.loadTopics()
-  },
-  methods: {
-    loadTopics () {
-      request
-        .get('https://cnodejs.org/api/v1/topics')
-        .query({
-          page: this.page,
-          limit: this.limit,
-          mdrender: false
-        }).end((err, res) => {
-          if (!err) {
-            res.body.data.forEach(cur => this.topics.push(cur))
-          }
-        })
-    },
-    loadMore () {
-      this.page += 1
-      this.loadTopics()
-    }
+    request
+      .get(`https://cnodejs.org/api/v1/user/${this.user.loginName}`)
+      .end((err, res) => {
+        if (!err) {
+          this.$set('userDetail', res.body.data)
+        }
+      })
   }
 }
 </script>
 
 <style lang="stylus">
-.topics
-  margin-bottom 50px
-  ul
-    list-style none
-    padding-left 0
-    li
-      padding 20px 0
-      border-bottom 1px solid #808080
-      &:after
-        content ''
-        display block
-        clear both
-      .author
-        float left
-        width 80px
-        img
-          width 100%
-      .topic
-        float left
-        margin-left 20px
+.home-page
+  &:after
+    content ''
+    display block
+    clear both
+  .page-content
+    width 70%
+    float left
+    padding-right 30px
 </style>
