@@ -26,10 +26,14 @@ export default {
 *
   box-sizing border-box
 a
-  color #333
+  color #08c
+  &:hover
+    color #005580
   text-decoration none
   &:hover
     text-decoration underline
+img
+  max-width 100%
 ul
 ol
   padding-left 18px
