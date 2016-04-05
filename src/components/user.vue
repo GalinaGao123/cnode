@@ -3,9 +3,9 @@
   h2 个人信息
   .author
     .basic-info
-      a.avatar(v-link="{name: 'user'}")
+      a.avatar(v-link="{name: 'user', params: {loginname: userInfo.loginname}}")
         img(:src="userInfo.avatar_url")
-      a(v-link="{name: 'user'}") {{userInfo.loginname}}
+      a(v-link="{name: 'user', params: {loginname: userInfo.loginname}}") {{userInfo.loginname}}
     .description
       p 积分： {{userInfo.score}}
 </template>

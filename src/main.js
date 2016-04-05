@@ -30,5 +30,5 @@ router.map({
 router.redirect({
   '*': '/'
 })
-
+Vue.config.debug = true
 router.start(App, '#app')
