@@ -3,11 +3,13 @@
   .page-content
     topics
   user(:user-info="userDetail", v-if="user.accessToken")
+  publish
 </template>
 
 <script>
 import topics from '../components/topics'
 import user from '../components/user'
+import publish from '../components/publish'
 import {getUserInfo} from '../vuex/getters'
 import request from 'superagent'
 
@@ -19,7 +21,8 @@ export default {
   },
   components: {
     topics,
-    user
+    user,
+    publish
   },
   vuex: {
     getters: {

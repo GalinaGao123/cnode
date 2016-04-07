@@ -11,6 +11,8 @@
 </template>
 
 <script>
+let tabs = {share: '分享', ask: '问答', job: '招聘'}
+
 export default {
   props: ['topic'],
   computed: {
@@ -20,7 +22,7 @@ export default {
       } else if (this.topic.good) {
         return '精华'
       } else {
-        return this.topic.tab
+        return tabs[this.topic.tab]
       }
     }
   }
@@ -42,19 +44,21 @@ export default {
         display block
   p
     margin 0 10px
-    width 70px
+    width 80px
   .tag
-    width 36px
+    width 40px
     text-align center
     background #80bd01
+    border-radius 2px
     color #fff
     &.grey
-      background #ccc
+      background #aaa
   .topic-title
     margin-left 10px
     width 70%
     a
       display block
+      color #333
       overflow hidden
       text-overflow ellipsis
       white-space nowrap

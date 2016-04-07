@@ -5,10 +5,10 @@
     li(v-for="reply in topic.replies")
       .reply(:class="{'show': reply.ups.length > 0}")
         .btn.reply-btn 回复
-        .btn.ding(@click="up(reply.id)")顶 {{reply.ups.length}}
+        .btn.ding(@click="up(reply.id, $index)")顶 {{reply.ups.length}}
         .author
           .avatar
-            a(v-link="{name: 'user', params: {loginname: reply.author.loginname}}")
+            a.avatar(v-link="{name: 'user', params: {loginname: reply.author.loginname}}")
               img(:src="reply.author.avatar_url")
           a.name(v-link="{name: 'user', params: {loginname: reply.author.loginname}}") {{reply.author.loginname}}
           p.reply-info {{$index + 1}}楼 &bullet; {{reply.create_at}}
@@ -22,14 +22,14 @@ import {getUserInfo} from '../vuex/getters'
 export default {
   props: ['topic'],
   methods: {
-    up (id) {
+    up (id, idx) {
       request
         .post(`https://cnodejs.org/api/v1/reply/${id}/ups`)
         .type('form')
         .send({accesstoken: this.getUserInfo.accessToken})
         .end((err, res) => {
           if (!err) {
-            console.log(123)
+            this.topic.replies[idx].ups.length += 1
           }
         })
     }
@@ -44,6 +44,7 @@ export default {
 
 <style lang="stylus">
 .replies
+  background #fff
   .reply-count
     background #f6f6f6
     padding 10px
@@ -54,14 +55,14 @@ export default {
       padding 10px 15px
       border-bottom 1px solid #eee
       .btn
-        background #08c
+        background #80bd01
         color #fff
         border-radius 2px
         padding 2px 4px
         margin 10px 15px 0 0
         float right
         &:hover
-          background #005580
+          background #6ba44e
         &.ding
           display none
       &:hover
@@ -75,6 +76,8 @@ export default {
         align-items center
         a
           display block
+          &.avatar
+            width 40px
           &.name
             margin-left 10px
         .reply-info
@@ -82,5 +85,5 @@ export default {
           color #666
           margin-left 20px
       .replay-content
-        padding-left 30px
+        padding-left 50px
 </style>

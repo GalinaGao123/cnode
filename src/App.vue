@@ -7,7 +7,7 @@ div
   .footer
     .main-content
       .copyright
-        p &copy;
+        p &copy; cnodejs社区
 </template>
 
 <script>
@@ -26,9 +26,7 @@ export default {
 *
   box-sizing border-box
 a
-  color #08c
-  &:hover
-    color #005580
+  color #333
   text-decoration none
   &:hover
     text-decoration underline

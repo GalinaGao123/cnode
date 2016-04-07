@@ -77,6 +77,7 @@ export default {
 <style lang="stylus">
 .topics
   background #fff
+  border-radius 5px
   ul
     list-style none
     padding-left 0
@@ -87,10 +88,16 @@ export default {
       li
         display inline-block
         margin-right 20px
+        a
+          color #80bd01
+          &:hover
+            color #08c
         .current-tag
           background #80bd01
           color #fff
           padding 2px 4px
+          &:hover
+            color #fff
   button
     margin 20px 0
   ul.topic-container

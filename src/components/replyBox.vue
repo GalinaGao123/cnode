@@ -41,6 +41,7 @@ export default {
 <style lang="stylus">
 .reply-box
   background #fff
+  margin-top 20px
   h3
     margin 0 0 20px 0
     background #f6f6f6
@@ -51,13 +52,14 @@ export default {
       display block
       width 100%
       height 80px
+      border 1px solid #ccc
   .reply-btn
     display inline-block
-    background #08c
+    background #80bd01
     color #fff
     border-radius 2px
     padding 2px 4px
     margin 15px
     &:hover
-      background #005580
+      background #6ba44e
 </style>

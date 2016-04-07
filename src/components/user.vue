@@ -21,11 +21,13 @@ export default {
   width 30%
   float left
   background #fff
+  border-radius 3px 3px 0 0
   h2
     font-size 14px
     background #f6f6f6
+    border-radius 3px 3px 0 0
     margin 0
-    padding 10px 5px
+    padding 10px
   .author
     padding 10px
     .basic-info

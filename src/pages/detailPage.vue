@@ -4,9 +4,9 @@
     .topic-content
       h1 {{topic.title}}
       collect(:collected="topic.is_collect", :id="topic.id")
-      p.info 发布于 {{topic.create_at}} &bullet; 来自 {{topic.tab}}
+      p.info 发布于 {{topic.create_at}} &bullet; 来自 {{tabs[topic.tab]}}
       .topic-detail {{{topic.content}}}
-      reply(:topic="topic")
+    reply(:topic="topic")
     reply-box(:topic-id="topic.id")
   user(:user-info="userDetail")
 </template>
@@ -25,7 +25,8 @@ export default {
       topic: {
         author: {}
       },
-      userDetail: {}
+      userDetail: {},
+      tabs: {share: '分享', ask: '问答', job: '招聘'}
     }
   },
   components: {
@@ -63,13 +64,14 @@ export default {
     display block
     clear both
   .page-content
-    width 65%
+    width 70%
+    padding-right 30px
     float left
     border-radius 5px
     margin-bottom 10px
     .topic-content
       background #fff
-      padding 10px 15px 0
+      padding 10px 15px
       margin-bottom 20px
       .info
         font-size 12px
@@ -79,6 +81,5 @@ export default {
         border-bottom 1px solid #eee
   .user-aside
     width 30%
-    margin-left 5%
     float left
 </style>

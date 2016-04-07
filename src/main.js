@@ -5,6 +5,9 @@ import indexPage from './pages/indexPage'
 import detailPage from './pages/detailPage'
 import userPage from './pages/userPage'
 import loginPage from './pages/loginPage'
+import messagePage from './pages/messagePage'
+import createPage from './pages/createPage'
+
 // Vue.config.debug = true
 Vue.use(VueRouter)
 
@@ -24,6 +27,14 @@ router.map({
   '/login': {
     name: 'login',
     component: loginPage
+  },
+  'messages': {
+    name: 'messages',
+    component: messagePage
+  },
+  'create': {
+    name: 'create',
+    component: createPage
   }
 })
 
