@@ -1,12 +1,14 @@
 <template lang="jade">
 .detail-page
+  .mask(v-if="$loadingRouteData")
+    h1 Loading...
   .page-content
     .topic-content
       h1 {{topic.title}}
       collect(:collected="topic.is_collect", :id="topic.id")
       p.info 发布于 {{topic.create_at}} &bullet; 来自 {{tabs[topic.tab]}}
       .topic-detail {{{topic.content}}}
-    reply(:topic="topic")
+    replies(:replies="topic.replies", :topic-id="topic.id")
     reply-box(:topic-id="topic.id")
   user(:user-info="userDetail")
 </template>
@@ -15,7 +17,7 @@
 import request from 'superagent'
 import collect from '../components/collect'
 import user from '../components/user'
-import reply from '../components/reply'
+import replies from '../components/replies'
 import replyBox from '../components/replyBox'
 import {getStorage} from '../common/storage'
 
@@ -23,7 +25,8 @@ export default {
   data () {
     return {
       topic: {
-        author: {}
+        author: {},
+        replies: []
       },
       userDetail: {},
       tabs: {share: '分享', ask: '问答', job: '招聘'}
@@ -32,14 +35,14 @@ export default {
   components: {
     collect,
     user,
-    reply,
+    replies,
     replyBox
   },
   route: {
     data (transition) {
       request
         .get('https://cnodejs.org/api/v1/topic/' + transition.to.params.id)
-        .query({mdrender: true, accesstoken: `${getStorage('accessToken')}`})
+        .query({accesstoken: `${getStorage('accessToken')}`})
         .end((err, res) => {
           if (!err) {
             let a = res.body.data
@@ -53,6 +56,18 @@ export default {
           }
         })
     }
+  },
+  events: {
+    reloadReply () {
+      request
+        .get(`https://cnodejs.org/api/v1/topic/${this.$route.params.id}`)
+        .query({accesstoken: `${getStorage('accessToken')}`})
+        .end((err, res) => {
+          if (!err) {
+            this.topic = res.body.data
+          }
+        })
+    }
   }
 }
 </script>
@@ -63,6 +78,17 @@ export default {
     content ''
     display block
     clear both
+  .mask
+    position fixed
+    z-index 10
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background #eee
+    display flex
+    align-items center
+    justify-content center
   .page-content
     width 70%
     padding-right 30px

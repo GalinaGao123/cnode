@@ -13,10 +13,16 @@
         my-collection(:collections="collections")
     .content-block
       h3 最近发布的话题
-      .detail 无
+      .detail
+        ul(v-for="topic in user.recent_topics")
+          li
+            a(v-link="{name: 'topic', params: {id: topic.id}}") {{topic.title}}
     .content-block
       h3 最近参与的话题
-      .detail 无
+      .detail
+        ul(v-for="reply in user.recent_replies")
+          li
+            a(v-link="{name: 'topic', params: {id: reply.id}}") {{reply.title}}
   user(:user-info="user")
   publish
 </template>
@@ -30,7 +36,10 @@ import publish from '../components/publish'
 export default {
   data () {
     return {
-      user: {},
+      user: {
+        recent_replies: [],
+        recent_topics: []
+      },
       collections: []
     }
   },

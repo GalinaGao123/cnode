@@ -24,8 +24,8 @@ export default {
     return {
       userDetail: {},
       messages: {
-        hasnot_read_messages: {},
-        has_read_messages: {}
+        hasnot_read_messages: [],
+        has_read_messages: []
       }
     }
   },

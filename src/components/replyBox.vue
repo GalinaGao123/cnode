@@ -1,6 +1,5 @@
 <template lang="jade">
 .reply-box
-  h3 添加回复
   .input-box
     textarea(v-model="replyContent")
   .reply-btn(@click="addCommont") 回复
@@ -16,16 +15,24 @@ export default {
       replyContent: ''
     }
   },
-  props: ['topicId'],
+  props: {
+    topicId: {required: true},
+    replyId: {type: String}
+  },
   methods: {
     addCommont () {
+      let arg = {accesstoken: this.getUserInfo.accessToken, content: this.replyContent}
+      if (this.replyId) {
+        arg.reply_id = this.replyId
+      }
       request
         .post(`https://cnodejs.org/api/v1/topic/${this.topicId}/replies`)
         .type('form')
-        .send({accesstoken: this.getUserInfo.accessToken, content: this.replyContent})
+        .send(arg)
         .end((err, res) => {
           if (!err) {
-            console.log(213)
+            this.$dispatch('reloadReply')
+            this.replyContent = ''
           }
         })
     }
@@ -41,16 +48,17 @@ export default {
 <style lang="stylus">
 .reply-box
   background #fff
-  margin-top 20px
-  h3
-    margin 0 0 20px 0
-    background #f6f6f6
-    padding 10px
+  padding 20px 0
+  &:after
+    content ''
+    display block
+    clear both
   .input-box
     padding 0 15px
     textarea
       display block
       width 100%
+      resize none
       height 80px
       border 1px solid #ccc
   .reply-btn
@@ -59,7 +67,8 @@ export default {
     color #fff
     border-radius 2px
     padding 2px 4px
-    margin 15px
+    float right
+    margin 20px 15px 0 0
     &:hover
       background #6ba44e
 </style>
