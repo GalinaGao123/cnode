@@ -14,15 +14,17 @@
     .content-block
       h3 最近发布的话题
       .detail
-        ul(v-for="topic in user.recent_topics")
+        ul(v-if="user.recent_topics.length", v-for="topic in user.recent_topics")
           li
             a(v-link="{name: 'topic', params: {id: topic.id}}") {{topic.title}}
+        span(v-else) 无
     .content-block
       h3 最近参与的话题
       .detail
-        ul(v-for="reply in user.recent_replies")
+        ul(v-if="user.recent_replies.length", v-for="reply in user.recent_replies")
           li
             a(v-link="{name: 'topic', params: {id: reply.id}}") {{reply.title}}
+        span(v-else) 无
   user(:user-info="user")
   publish
 </template>

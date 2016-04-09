@@ -6,11 +6,19 @@
         a(v-link="{path: '/'}") 主页
         span /
         span 新消息
-      .messages-content {{messages.hasnot_read_messages.length ? '有消息' : '无消息'}}
+      .messages-content
+        ul(v-if="messages.hasnot_read_messages.length", v-for="messages.hasnot_read_messages")
+          li
+            a(v-link="{name: 'topic', params: {id: topic.id}}") {{topic.title}}
+        span(v-else) 无消息
     .old-messages
       .title
         span 旧消息
-      .messages-content {{messages.has_read_messages.length ? '有消息' : '无消息'}}
+      .messages-content
+        ul(v-if="messages.has_read_messages.length", v-for="messages.has_read_messages")
+          li
+            a(v-link="{name: 'topic', params: {id: topic.id}}") {{topic.title}}
+        span(v-else) 无消息
   user(:user-info="userDetail")
 </template>
 
