@@ -7,8 +7,12 @@ import userPage from './pages/userPage'
 import loginPage from './pages/loginPage'
 import messagePage from './pages/messagePage'
 import createPage from './pages/createPage'
+import {markdown} from 'markdown'
 
-// Vue.config.debug = true
+Vue.filter('toHTML', (str) => {
+  return markdown.toHTML(str || '')
+})
+
 Vue.use(VueRouter)
 
 let router = new VueRouter()
@@ -41,5 +45,5 @@ router.map({
 router.redirect({
   '*': '/'
 })
-Vue.config.debug = true
+
 router.start(App, '#app')

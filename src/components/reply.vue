@@ -60,7 +60,7 @@ export default {
 <style lang="stylus">
 .reply
   background #fff
-  padding 10px 15px 0
+  padding 10px 15px
   border-bottom 1px solid #eee
   .btn
     background #80bd01

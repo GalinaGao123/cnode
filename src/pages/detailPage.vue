@@ -7,7 +7,7 @@
       h1 {{topic.title}}
       collect(:collected="topic.is_collect", :id="topic.id")
       p.info 发布于 {{topic.create_at}} &bullet; 来自 {{tabs[topic.tab]}}
-      .topic-detail {{{topic.content}}}
+      .topic-detail {{{topic.content | toHTML}}}
     replies(:replies="topic.replies", :topic-id="topic.id")
     reply-box(:topic-id="topic.id")
   user(:user-info="userDetail")
@@ -42,7 +42,7 @@ export default {
     data (transition) {
       request
         .get('https://cnodejs.org/api/v1/topic/' + transition.to.params.id)
-        .query({accesstoken: `${getStorage('accessToken')}`})
+        .query({mdrender: false, accesstoken: `${getStorage('accessToken')}`})
         .end((err, res) => {
           if (!err) {
             let a = res.body.data

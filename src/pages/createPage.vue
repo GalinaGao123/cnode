@@ -15,15 +15,19 @@
     .topic-title
       input(type="text", placeholder="标题字数10字以上", v-model="topicTitle")
     .topic-content
-      textarea(v-model="topicContent")
+      textarea(v-model="topicContent", placeholder="请输入内容,右侧预览")
       a.publish-btn(@click="publish") 发布
   user(:user-info="userDetail")
+  .preview
+    .title 预览
+    .content-preview  {{{topicContent | toHTML}}}
 </template>
 
 <script>
 import request from 'superagent'
 import {getUserInfo} from '../vuex/getters'
 import user from '../components/user'
+
 let tabs = {分享: 'share', 问答: 'ask', 招聘: 'job'}
 
 export default {
@@ -105,8 +109,9 @@ export default {
   .topic-content
     textarea
       width 100%
-      height 400px
+      min-height 400px
       border 1px solid #ccc
+      resize none
     .publish-btn
       background #80bd01
       color #fff
@@ -116,4 +121,16 @@ export default {
       margin 10px 0 20px 0
       &:hover
         background #6ba44e
+  .preview
+    width 30%
+    float left
+    margin-top 20px
+    background #fff
+    border 1px solid #ccc
+    min-height 380px
+    .title
+      padding 10px
+      background #f6f6f6
+    .content-preview
+      padding 10px
 </style>
